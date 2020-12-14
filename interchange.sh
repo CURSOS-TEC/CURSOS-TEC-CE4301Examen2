@@ -20,7 +20,7 @@ xOptAxis=()
 # number of ticks
 yOptAxis=()
 
-for testIndex in 1 2 3 4 5 6 7 8 9 10
+for testIndex in 1 2 3 4 5 6
 do
 echo "Simulación con matriz de $((2**testIndex)) x $((2**testIndex))"
 (time $OPT -d "./${META_FOLDER_NAME}/interchangeBase/m5out${testIndex}/"  $PY -c $BENCHMARK -o $((2**testIndex)) --cpu-type=$META_CPU_TYPE --caches --l2cache --l1d_size=256kB --l1i_size=256kB --l2_size=1MB --l1d_assoc=2 --l1i_assoc=2 --l2_assoc=1 --cacheline_size=64) &> /dev/null 2>&1
@@ -39,5 +39,5 @@ touch $META_WORK_DIR_OPT/plotResult
 { echo "${xOptAxis[*]}"; echo "${yOptAxis[*]}"; } >$META_WORK_DIR_OPT/plotResult
 
 echo "Generando gráfico de prueba ${META_FOLDER_NAME}"
-python3 viewer.py --xtitle "${META_XAXIS}"  --ytitle "${META_YAXIS}" --xscale "log" --yscale "log" --xbase 2 --ybase 10 --inputfolder "$META_WORK_RESULTS"
+python3 viewer.py --xtitle "${META_XAXIS}"  --ytitle "${META_YAXIS}" --xscale "log" --yscale "linear" --xbase 2 --ybase 10 --inputfolder "$META_WORK_RESULTS"
 #python3 viewer.py --xtitle "${META_XAXIS}"  --ytitle "${META_YAXIS} Improved" --xscale "log" --yscale "linear" --xbase 2 --ybase 10 --inputfolder "$META_WORK_DIR_OPT"
